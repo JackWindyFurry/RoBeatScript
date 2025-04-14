@@ -1,0 +1,64 @@
+-- 🧠 Reusable rounded corner function
+local function createRounded(instance, radius)
+	local corner = Instance.new("UICorner")
+	corner.CornerRadius = UDim.new(0, radius)
+	corner.Parent = instance
+end
+
+-- 💡 GUI Setup
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "AutoGuiLauncher"
+ScreenGui.ResetOnSpawn = false
+ScreenGui.Parent = game.CoreGui
+
+-- 📦 Main Container
+local Main = Instance.new("Frame")
+Main.Size = UDim2.new(0, 300, 0, 200)
+Main.Position = UDim2.new(0.5, -150, 0.5, -100)
+Main.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+Main.BorderSizePixel = 0
+Main.Parent = ScreenGui
+createRounded(Main, 12)
+
+-- 🌌 Background Image
+local BG = Instance.new("ImageLabel")
+BG.Size = UDim2.new(1, 0, 1, 0)
+BG.BackgroundTransparency = 1
+BG.Image = "rbxassetid://117121013443157"
+BG.ZIndex = 0
+BG.Parent = Main
+createRounded(BG, 16)
+
+-- 🟪 UI Layout
+local layout = Instance.new("UIListLayout")
+layout.Padding = UDim.new(0, 10)
+layout.FillDirection = Enum.FillDirection.Vertical
+layout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+layout.VerticalAlignment = Enum.VerticalAlignment.Center
+layout.Parent = Main
+
+-- 🟦 Create Button Function
+local function createButton(text, callback)
+	local button = Instance.new("TextButton")
+	button.Size = UDim2.new(0, 200, 0, 40)
+	button.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+	button.TextColor3 = Color3.fromRGB(255, 255, 255)
+	button.Text = text
+	button.Font = Enum.Font.Gotham
+	button.TextSize = 16
+	button.AutoButtonColor = true
+	createRounded(button, 10)
+	button.Parent = Main
+
+	button.MouseButton1Click:Connect(callback)
+end
+
+-- 🔘 Button 1: Load V3
+createButton("Load Auto GUI V3", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/JackWindyFurry/AutoPlayRobeatV3/refs/heads/main/RoBeatAutoPlayer"))()
+end)
+
+-- 🔘 Button 2: Load V4
+createButton("Load Auto GUI V4", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/JackWindyFurry/RobeatAutoPlayerV4/refs/heads/main/RobeatAutoPlayerV4"))()
+end)
