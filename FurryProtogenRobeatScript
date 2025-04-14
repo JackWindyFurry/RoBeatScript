@@ -10,7 +10,7 @@ local function createButton(text, onClick)
 	local button = Instance.new("TextButton")
 	button.Size = UDim2.new(1, -20, 0, 30)
 	button.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-	button.TextColor3 = Color3.fromRGB(255, 255, 255)
+	button.TextColor3 = Color3.fromRGB(0, 0, 0) -- black text
 	button.Text = text
 	button.Font = Enum.Font.GothamSemibold
 	button.TextSize = 14
@@ -27,7 +27,8 @@ ScreenGui.Name = "RobeatLoadingScriptGui"
 local Main = Instance.new("Frame")
 Main.Size = UDim2.new(0, 320, 0, 280)
 Main.Position = UDim2.new(0.5, -160, 0.5, -140)
-Main.BackgroundTransparency = 1
+Main.BackgroundTransparency = 0.3 -- 0.7 visible
+Main.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 Main.Active = true
 Main.Draggable = true
 Main.Parent = ScreenGui
@@ -41,13 +42,13 @@ BG.Image = "rbxassetid://117121013443157"
 BG.Parent = Main
 createRounded(BG, 20)
 
--- 🔹 Credit Label
+-- 🔹 Credit Label (Top)
 local credit = Instance.new("TextLabel")
 credit.Size = UDim2.new(1, -10, 0, 20)
 credit.Position = UDim2.new(0, 5, 0, 5)
 credit.BackgroundTransparency = 1
 credit.Text = "RobeatLoadingScriptGui By jack_windy"
-credit.TextColor3 = Color3.fromRGB(255, 255, 255)
+credit.TextColor3 = Color3.fromRGB(0, 0, 0)
 credit.TextSize = 14
 credit.Font = Enum.Font.Gotham
 credit.TextXAlignment = Enum.TextXAlignment.Center
@@ -56,9 +57,9 @@ credit.Parent = Main
 -- 🔹 Button Container
 local ButtonContainer = Instance.new("Frame")
 ButtonContainer.Size = UDim2.new(1, -20, 0, 110)
-ButtonContainer.Position = UDim2.new(0, 10, 0.5, 0)
+ButtonContainer.Position = UDim2.new(0, 10, 0.4, 0)
 ButtonContainer.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
-ButtonContainer.BackgroundTransparency = 0
+ButtonContainer.BackgroundTransparency = 0.2
 ButtonContainer.Parent = Main
 createRounded(ButtonContainer, 16)
 
@@ -82,7 +83,7 @@ CloseBtn.Size = UDim2.new(0, 30, 0, 30)
 CloseBtn.Position = UDim2.new(1, -35, 0, 5)
 CloseBtn.Text = "X"
 CloseBtn.BackgroundColor3 = Color3.fromRGB(255, 60, 60)
-CloseBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+CloseBtn.TextColor3 = Color3.fromRGB(0, 0, 0)
 CloseBtn.Font = Enum.Font.GothamBold
 CloseBtn.TextSize = 14
 CloseBtn.Parent = Main
@@ -91,3 +92,15 @@ createRounded(CloseBtn, 8)
 CloseBtn.MouseButton1Click:Connect(function()
 	ScreenGui:Destroy()
 end)
+
+-- 🖼️ Credit for background image (bottom-right corner)
+local imageCredit = Instance.new("TextLabel")
+imageCredit.Size = UDim2.new(0, 200, 0, 20)
+imageCredit.Position = UDim2.new(1, -205, 1, -25)
+imageCredit.BackgroundTransparency = 1
+imageCredit.Text = "Image from @AflictedPaw"
+imageCredit.TextColor3 = Color3.fromRGB(0, 0, 0)
+imageCredit.TextSize = 12
+imageCredit.Font = Enum.Font.Gotham
+imageCredit.TextXAlignment = Enum.TextXAlignment.Right
+imageCredit.Parent = Main
