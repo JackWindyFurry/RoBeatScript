@@ -1,64 +1,93 @@
--- 🧠 Reusable rounded corner function
+-- 🔹 Create rounded corner function
 local function createRounded(instance, radius)
 	local corner = Instance.new("UICorner")
 	corner.CornerRadius = UDim.new(0, radius)
 	corner.Parent = instance
 end
 
--- 💡 GUI Setup
-local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Name = "AutoGuiLauncher"
-ScreenGui.ResetOnSpawn = false
-ScreenGui.Parent = game.CoreGui
+-- 🔹 Create button helper
+local function createButton(text, onClick)
+	local button = Instance.new("TextButton")
+	button.Size = UDim2.new(1, -20, 0, 30)
+	button.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+	button.TextColor3 = Color3.fromRGB(255, 255, 255)
+	button.Text = text
+	button.Font = Enum.Font.GothamSemibold
+	button.TextSize = 14
+	createRounded(button, 10)
+	button.MouseButton1Click:Connect(onClick)
+	return button
+end
 
--- 📦 Main Container
+-- 🔹 Main GUI
+local ScreenGui = Instance.new("ScreenGui", game.CoreGui)
+ScreenGui.Name = "RobeatLoadingScriptGui"
+
+-- 🔹 Main Frame (draggable)
 local Main = Instance.new("Frame")
-Main.Size = UDim2.new(0, 300, 0, 200)
-Main.Position = UDim2.new(0.5, -150, 0.5, -100)
-Main.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-Main.BorderSizePixel = 0
+Main.Size = UDim2.new(0, 320, 0, 280)
+Main.Position = UDim2.new(0.5, -160, 0.5, -140)
+Main.BackgroundTransparency = 1
+Main.Active = true
+Main.Draggable = true
 Main.Parent = ScreenGui
-createRounded(Main, 12)
+createRounded(Main, 20)
 
--- 🌌 Background Image
+-- 🔹 Background Image
 local BG = Instance.new("ImageLabel")
 BG.Size = UDim2.new(1, 0, 1, 0)
 BG.BackgroundTransparency = 1
 BG.Image = "rbxassetid://117121013443157"
-BG.ZIndex = 0
 BG.Parent = Main
-createRounded(BG, 16)
+createRounded(BG, 20)
 
--- 🟪 UI Layout
-local layout = Instance.new("UIListLayout")
-layout.Padding = UDim.new(0, 10)
-layout.FillDirection = Enum.FillDirection.Vertical
-layout.HorizontalAlignment = Enum.HorizontalAlignment.Center
-layout.VerticalAlignment = Enum.VerticalAlignment.Center
-layout.Parent = Main
+-- 🔹 Credit Label
+local credit = Instance.new("TextLabel")
+credit.Size = UDim2.new(1, -10, 0, 20)
+credit.Position = UDim2.new(0, 5, 0, 5)
+credit.BackgroundTransparency = 1
+credit.Text = "RobeatLoadingScriptGui By jack_windy"
+credit.TextColor3 = Color3.fromRGB(255, 255, 255)
+credit.TextSize = 14
+credit.Font = Enum.Font.Gotham
+credit.TextXAlignment = Enum.TextXAlignment.Center
+credit.Parent = Main
 
--- 🟦 Create Button Function
-local function createButton(text, callback)
-	local button = Instance.new("TextButton")
-	button.Size = UDim2.new(0, 200, 0, 40)
-	button.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
-	button.TextColor3 = Color3.fromRGB(255, 255, 255)
-	button.Text = text
-	button.Font = Enum.Font.Gotham
-	button.TextSize = 16
-	button.AutoButtonColor = true
-	createRounded(button, 10)
-	button.Parent = Main
-
-	button.MouseButton1Click:Connect(callback)
-end
+-- 🔹 Button Container
+local ButtonContainer = Instance.new("Frame")
+ButtonContainer.Size = UDim2.new(1, -20, 0, 110)
+ButtonContainer.Position = UDim2.new(0, 10, 0.5, 0)
+ButtonContainer.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+ButtonContainer.BackgroundTransparency = 0
+ButtonContainer.Parent = Main
+createRounded(ButtonContainer, 16)
 
 -- 🔘 Button 1: Load V3
-createButton("Load Auto GUI V3", function()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/JackWindyFurry/AutoPlayRobeatV3/refs/heads/main/RoBeatAutoPlayer"))()
+local Button1 = createButton("Load Auto GUI V3", function()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/JackWindyFurry/AutoPlayRobeatV3/refs/heads/main/RoBeatAutoPlayer"))()
 end)
+Button1.Position = UDim2.new(0, 10, 0, 10)
+Button1.Parent = ButtonContainer
 
 -- 🔘 Button 2: Load V4
-createButton("Load Auto GUI V4", function()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/JackWindyFurry/RobeatAutoPlayerV4/refs/heads/main/RobeatAutoPlayerV4"))()
+local Button2 = createButton("Load Auto GUI V4", function()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/JackWindyFurry/RobeatAutoPlayerV4/refs/heads/main/RobeatAutoPlayerV4"))()
+end)
+Button2.Position = UDim2.new(0, 10, 0, 50)
+Button2.Parent = ButtonContainer
+
+-- ❌ Close Button
+local CloseBtn = Instance.new("TextButton")
+CloseBtn.Size = UDim2.new(0, 30, 0, 30)
+CloseBtn.Position = UDim2.new(1, -35, 0, 5)
+CloseBtn.Text = "X"
+CloseBtn.BackgroundColor3 = Color3.fromRGB(255, 60, 60)
+CloseBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+CloseBtn.Font = Enum.Font.GothamBold
+CloseBtn.TextSize = 14
+CloseBtn.Parent = Main
+createRounded(CloseBtn, 8)
+
+CloseBtn.MouseButton1Click:Connect(function()
+	ScreenGui:Destroy()
 end)
