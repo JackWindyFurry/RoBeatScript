@@ -1,81 +1,45 @@
--- 🔹 Create rounded corner function
-local function createRounded(instance, radius)
-	local corner = Instance.new("UICorner")
-	corner.CornerRadius = UDim.new(0, radius)
-	corner.Parent = instance
-end
-
--- 🔹 Create button helper
-local function createButton(text, onClick)
-	local button = Instance.new("TextButton")
-	button.Size = UDim2.new(1, -20, 0, 30)
-	button.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-	button.TextColor3 = Color3.fromRGB(0, 0, 0) -- black text
-	button.Text = text
-	button.Font = Enum.Font.GothamSemibold
-	button.TextSize = 14
-	createRounded(button, 10)
-	button.MouseButton1Click:Connect(onClick)
-	return button
-end
-
--- 🔹 Main GUI
-local ScreenGui = Instance.new("ScreenGui", game.CoreGui)
+-- 🌀 Create GUI Elements
+local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "RobeatLoadingScriptGui"
+ScreenGui.ResetOnSpawn = false
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 
--- 🔹 Main Frame (draggable)
 local Main = Instance.new("Frame")
-Main.Size = UDim2.new(0, 320, 0, 280)
-Main.Position = UDim2.new(0.5, -160, 0.5, -140)
-Main.BackgroundTransparency = 0.3 -- 0.7 visible
+Main.Size = UDim2.new(0, 300, 0, 320)
+Main.Position = UDim2.new(0.5, -150, 0.5, -160)
+Main.BackgroundTransparency = 0.3
 Main.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 Main.Active = true
 Main.Draggable = true
 Main.Parent = ScreenGui
-createRounded(Main, 20)
 
--- 🔹 Background Image
+-- 🖼️ Background Image
 local BG = Instance.new("ImageLabel")
 BG.Size = UDim2.new(1, 0, 1, 0)
 BG.BackgroundTransparency = 1
 BG.Image = "rbxassetid://117121013443157"
 BG.Parent = Main
-createRounded(BG, 20)
 
--- 🔹 Credit Label (Top)
-local credit = Instance.new("TextLabel")
-credit.Size = UDim2.new(1, -10, 0, 20)
-credit.Position = UDim2.new(0, 5, 0, 5)
-credit.BackgroundTransparency = 1
-credit.Text = "RobeatLoadingScriptGui By jack_windy"
-credit.TextColor3 = Color3.fromRGB(0, 0, 0)
-credit.TextSize = 14
-credit.Font = Enum.Font.Gotham
-credit.TextXAlignment = Enum.TextXAlignment.Center
-credit.Parent = Main
+-- 🧊 Rounded corners helper
+local function createRounded(instance, radius)
+	local corner = Instance.new("UICorner")
+	corner.CornerRadius = UDim.new(0, radius)
+	corner.Parent = instance
+end
+createRounded(Main, 16)
+createRounded(BG, 16)
 
--- 🔹 Button Container
-local ButtonContainer = Instance.new("Frame")
-ButtonContainer.Size = UDim2.new(1, -20, 0, 110)
-ButtonContainer.Position = UDim2.new(0, 10, 0.4, 0)
-ButtonContainer.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
-ButtonContainer.BackgroundTransparency = 0.2
-ButtonContainer.Parent = Main
-createRounded(ButtonContainer, 16)
-
--- 🔘 Button 1: Load V3
-local Button1 = createButton("Load Auto GUI V3", function()
-	loadstring(game:HttpGet("https://raw.githubusercontent.com/JackWindyFurry/AutoPlayRobeatV3/refs/heads/main/RoBeatAutoPlayer"))()
-end)
-Button1.Position = UDim2.new(0, 10, 0, 10)
-Button1.Parent = ButtonContainer
-
--- 🔘 Button 2: Load V4
-local Button2 = createButton("Load Auto GUI V4", function()
-	loadstring(game:HttpGet("https://raw.githubusercontent.com/JackWindyFurry/RobeatAutoPlayerV4/refs/heads/main/RobeatAutoPlayerV4"))()
-end)
-Button2.Position = UDim2.new(0, 10, 0, 50)
-Button2.Parent = ButtonContainer
+-- 📛 Title
+local Title = Instance.new("TextLabel")
+Title.Text = "RobeatLoadingScriptGui By jack_windy"
+Title.Size = UDim2.new(1, -40, 0, 30)
+Title.Position = UDim2.new(0, 10, 0, 5)
+Title.BackgroundTransparency = 1
+Title.TextScaled = true
+Title.TextColor3 = Color3.fromRGB(0, 0, 0)
+Title.Font = Enum.Font.SourceSansBold
+Title.TextXAlignment = Enum.TextXAlignment.Left
+Title.Parent = Main
 
 -- ❌ Close Button
 local CloseBtn = Instance.new("TextButton")
@@ -83,24 +47,54 @@ CloseBtn.Size = UDim2.new(0, 30, 0, 30)
 CloseBtn.Position = UDim2.new(1, -35, 0, 5)
 CloseBtn.Text = "X"
 CloseBtn.BackgroundColor3 = Color3.fromRGB(255, 60, 60)
-CloseBtn.TextColor3 = Color3.fromRGB(0, 0, 0)
-CloseBtn.Font = Enum.Font.GothamBold
-CloseBtn.TextSize = 14
-CloseBtn.Parent = Main
+CloseBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+CloseBtn.Font = Enum.Font.SourceSansBold
+CloseBtn.TextScaled = true
 createRounded(CloseBtn, 8)
+CloseBtn.Parent = Main
 
 CloseBtn.MouseButton1Click:Connect(function()
 	ScreenGui:Destroy()
 end)
 
--- 🖼️ Credit for background image (bottom-right corner)
-local imageCredit = Instance.new("TextLabel")
-imageCredit.Size = UDim2.new(0, 200, 0, 20)
-imageCredit.Position = UDim2.new(1, -205, 1, -25)
-imageCredit.BackgroundTransparency = 1
-imageCredit.Text = "Image from @AflictedPaw"
-imageCredit.TextColor3 = Color3.fromRGB(0, 0, 0)
-imageCredit.TextSize = 12
-imageCredit.Font = Enum.Font.Gotham
-imageCredit.TextXAlignment = Enum.TextXAlignment.Right
-imageCredit.Parent = Main
+-- 🔘 Button creator
+local function createButton(text, callback)
+	local Button = Instance.new("TextButton")
+	Button.Size = UDim2.new(0.8, 0, 0, 40)
+	Button.Position = UDim2.new(0.1, 0, 0, 0) -- Will update in layout
+	Button.BackgroundTransparency = 0.4
+	Button.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	Button.Text = text
+	Button.TextColor3 = Color3.fromRGB(255, 255, 255)
+	Button.Font = Enum.Font.SourceSansBold
+	Button.TextScaled = true
+	createRounded(Button, 12)
+	Button.Parent = Main
+
+	Button.MouseButton1Click:Connect(callback)
+	return Button
+end
+
+-- 🔘 Button 1: Load V3
+local ButtonV3 = createButton("Load Auto GUI V3", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/JackWindyFurry/AutoPlayRobeatV3/refs/heads/main/RoBeatAutoPlayer"))()
+end)
+ButtonV3.Position = UDim2.new(0.1, 0, 0.45, 0)
+
+-- 🔘 Button 2: Load V4
+local ButtonV4 = createButton("Load Auto GUI V4", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/JackWindyFurry/RobeatAutoPlayerV4/refs/heads/main/RobeatAutoPlayerV4"))()
+end)
+ButtonV4.Position = UDim2.new(0.1, 0, 0.6, 0)
+
+-- 📝 Credits Label
+local Credits = Instance.new("TextLabel")
+Credits.Size = UDim2.new(1, -10, 0, 20)
+Credits.Position = UDim2.new(0, 5, 1, -25)
+Credits.BackgroundTransparency = 1
+Credits.Text = "Image from @AflictedPaw"
+Credits.TextColor3 = Color3.fromRGB(0, 0, 0)
+Credits.TextXAlignment = Enum.TextXAlignment.Right
+Credits.Font = Enum.Font.SourceSansItalic
+Credits.TextScaled = true
+Credits.Parent = Main
